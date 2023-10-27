@@ -273,8 +273,21 @@ public class Partition extends UniversalActor  {
 			colorTotal = new Hashtable();
 			degreeColorTotal = new Hashtable();
 		}
-		public Graph get() {
-			return part;
+		public Integer getNodesInColors(String color) {
+			return (Integer)colorTotal.get(color);
+		}
+		public void getTotalNodesInColors() {
+			Iterator nodeItr = part.getNodes().iterator();
+			while (nodeItr.hasNext()) {
+				Object node = nodeItr.next();
+				String nodeColor = part.getColor((Integer)node);
+				if (colorTotal.containsKey(nodeColor)) {{
+					colorTotal.put(nodeColor, (Integer)colorTotal.get(nodeColor)+1);
+				}
+}				else {{
+					colorTotal.put(nodeColor, 1);
+				}
+}			}
 		}
 	}
 }

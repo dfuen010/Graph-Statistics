@@ -278,6 +278,29 @@ public class GraphStats extends UniversalActor  {
 				Graph testGraph = fileparser.createGraph();
 				Graph part1 = testGraph.getPartitionGraph(0);
 				Partition p = ((Partition)new Partition(this).construct(part1));
+				{
+					// p<-getTotalNodesInColors()
+					{
+						Object _arguments[] = {  };
+						Message message = new Message( self, p, "getTotalNodesInColors", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+				{
+					Token token_3_0 = new Token();
+					// p<-getNodesInColors("green")
+					{
+						Object _arguments[] = { "green" };
+						Message message = new Message( self, p, "getNodesInColors", _arguments, null, token_3_0 );
+						__messages.add( message );
+					}
+					// standardOutput<-println(token)
+					{
+						Object _arguments[] = { token_3_0 };
+						Message message = new Message( self, standardOutput, "println", _arguments, token_3_0, null );
+						__messages.add( message );
+					}
+				}
 			}
 }			else {{
 				{

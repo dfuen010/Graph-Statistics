@@ -37,6 +37,8 @@ behavior GraphStats{
         Graph testGraph = fileparser.createGraph();
         Graph part1 = testGraph.getPartitionGraph(0);
         Partition p = new Partition(part1);
+        p <- getTotalNodesInColors();
+        p <- getNodesInColors("green") @ standardOutput <- println(token);
       }
       else
       {

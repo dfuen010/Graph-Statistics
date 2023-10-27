@@ -103,6 +103,17 @@ public class Graph implements Serializable {
         return nodeList;
     }
 
+    public Integer getDegree(int node) 
+    {
+        Integer degree = 0;
+        List<Integer> neighbors = adjacencyList.get(node);
+        for (int neighbor: neighbors) 
+        {
+            degree = degree + 1;
+        }
+        return degree;
+    }
+
     public String getColor(int node) {
         return nodeColors.get(node);
     }

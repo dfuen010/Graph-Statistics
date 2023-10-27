@@ -6,19 +6,41 @@ import concurrent.Graph;
 
 behavior Partition {
 
-  private Graph part;
+  Graph part;
   //these are to store the total number of nodes in each color and to hold the total degree number
   //for each color
-  private Hashtable colorTotal;
-  private Hashtable degreeColorTotal;
+  Hashtable colorTotal;
+  Hashtable degreeColorTotal;
 
   Partition(Graph initialgraph){
       part = initialgraph;
       colorTotal = new Hashtable();
       degreeColorTotal = new Hashtable();
   }
-
-  Graph get(){
-      return part;
+    
+  Integer getNodesInColors(String color)
+  {
+    return (Integer) colorTotal.get(color);
   }
+
+  void getTotalNodesInColors()
+  {
+    Iterator nodeItr = part.getNodes().iterator();
+    while (nodeItr.hasNext())
+    {
+        Object node = nodeItr.next();
+        String nodeColor = part.getColor((Integer) node);
+        if (colorTotal.containsKey(nodeColor))
+        {
+            colorTotal.put(nodeColor, (Integer) colorTotal.get(nodeColor) + 1);
+        }
+        else
+        {
+            colorTotal.put(nodeColor, 1);
+        }
+        //standardOutput<-println(nodeColor)@
+        //standardOutput<-println(colorTotal.get(nodeColor));
+    }
+  }
+
 }

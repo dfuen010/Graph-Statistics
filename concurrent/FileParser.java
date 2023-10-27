@@ -171,6 +171,8 @@ public class FileParser {
             System.out.println(currNode);
         }
 
+        System.out.println(graph.getDegree(0));
+
         graph.printGraph();
     }
         
