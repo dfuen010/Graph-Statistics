@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 // Currently makes one big Graph
 // But maybe we need to make an individual graph
 // For each partition?
 
-public class Graph {
+public class Graph implements Serializable {
 
     // Use to store node number and color, [3, "blue"]
     private Map<Integer, String> nodeColors;
@@ -89,6 +90,17 @@ public class Graph {
             }
         }
         return newgraph;
+    }
+
+    public List<Integer> getNodes()
+    {
+        List<Integer> nodeList = new ArrayList<>();
+        for (Map.Entry<Integer, String> entry : nodeColors.entrySet()) 
+        {
+            int node = entry.getKey();
+            nodeList.add(node);
+        }
+        return nodeList;
     }
 
     public String getColor(int node) {

@@ -3,6 +3,8 @@ package concurrent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 import concurrent.Graph;
 
 // Have list of classes in salsa that are actors?
@@ -160,6 +162,13 @@ public class FileParser {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        List<Integer> nodes = graph.getNodes();
+        for (Integer i = 0; i < nodes.size(); ++i)
+        {
+            Integer currNode = nodes.get(i);
+            System.out.println(currNode);
         }
 
         graph.printGraph();
