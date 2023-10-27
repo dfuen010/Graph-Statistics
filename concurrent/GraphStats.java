@@ -273,16 +273,11 @@ public class GraphStats extends UniversalActor  {
 		}
 		public void act(String[] args) {
 			int argc = args.length;
-			if (argc!=1) {{
-				{
-					// standardOutput<-println("Not the right number of arguements")
-					{
-						Object _arguments[] = { "Not the right number of arguements" };
-						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
-						__messages.add( message );
-					}
-				}
-				return;
+			if (argc==3) {{
+				FileParser fileparser = new FileParser(args[0]);
+				Graph testGraph = fileparser.createGraph();
+				Graph part1 = testGraph.getPartitionGraph(0);
+				Partition p = ((Partition)new Partition(this).construct(part1));
 			}
 }			else {{
 				{

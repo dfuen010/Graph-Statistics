@@ -175,8 +175,8 @@ public class Partition extends UniversalActor  {
 		}
 	}
 
-	public UniversalActor construct (Object initialContent) {
-		Object[] __arguments = { initialContent };
+	public UniversalActor construct (Graph initialgraph) {
+		Object[] __arguments = { initialgraph };
 		this.send( new Message(this, this, "construct", __arguments, null, null) );
 		return this;
 	}
@@ -265,15 +265,16 @@ public class Partition extends UniversalActor  {
 			}
 		}
 
-		Object content;
-		void construct(Object initialContent){
-			content = initialContent;
+		Graph part;
+		void construct(Graph initialgraph){
+			part = initialgraph;
+			part.printGraph();
 		}
-		public Object get() {
-			return content;
+		public Graph get() {
+			return part;
 		}
-		public void set(Object newContent) {
-			content = newContent;
+		public void set(Graph newGraph) {
+			part = newGraph;
 		}
 	}
 }

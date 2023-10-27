@@ -31,10 +31,12 @@ behavior GraphStats{
 
    void act(String[] args) {
       int argc = args.length;
-      if (argc != 1) 
+      if (argc == 3) 
       {
-        standardOutput<-println("Not the right number of arguements");
-        return;
+        FileParser fileparser = new FileParser(args[0]);
+        Graph testGraph = fileparser.createGraph();
+        Graph part1 = testGraph.getPartitionGraph(0);
+        Partition p = new Partition(part1);
       }
       else
       {

@@ -17,15 +17,25 @@ public class Graph {
     // use to store node and list connectins, [3, [1, 5, 7]]
     private Map<Integer, List<Integer>> adjacencyList;
 
+    // use to store node and what partition it belongs to, [3, 1] - 3 is in partition 1
+    private Map<Integer, Integer> nodePartitions;
+
+    // store how many partitions are in the graph for determining how many actors to use
+    private Integer numPartition;
+
 
 
     public Graph() {
         nodeColors = new HashMap<>();
         adjacencyList = new HashMap<>();
+        nodePartitions = new HashMap<>();
+        numPartition = 0;
     }
 
-    public void addNode(int node, String color) {
+    public void addNode(int node, String color, int partition) {
         nodeColors.put(node, color);
+        nodePartitions.put(node, partition);
+        numPartition = partition + 1;
         //might need erorr checking
         adjacencyList.put(node, new ArrayList<>());
     }
@@ -61,6 +71,26 @@ public class Graph {
         //adjacencyList.get(destination).add(source); 
     }
 
+    //get the specified partition and it's nodes in a new graph
+    public Graph getPartitionGraph(int chosenPartition)
+    {
+        Graph newgraph = new Graph();
+        for (Map.Entry<Integer, String> entry : nodeColors.entrySet()) {
+            int node = entry.getKey();
+            String color = entry.getValue();
+            List<Integer> neighbors = adjacencyList.get(node);
+            Integer partition = nodePartitions.get(node);
+            if (partition == chosenPartition) 
+            {
+                newgraph.addNode(node, color, partition);
+                for (int neighbor : neighbors) {
+                    newgraph.addEdge(node, neighbor);
+                }
+            }
+        }
+        return newgraph;
+    }
+
     public String getColor(int node) {
         return nodeColors.get(node);
     }
@@ -69,13 +99,19 @@ public class Graph {
         return adjacencyList.get(node);
     }
 
+    public Integer getPartition(int node) {
+        return nodePartitions.get(node);
+    }
+
     public void printGraph() {
+        System.out.print("Number of Partitions: " + numPartition + "\n");
         for (Map.Entry<Integer, String> entry : nodeColors.entrySet()) {
             int node = entry.getKey();
             String color = entry.getValue();
             List<Integer> neighbors = adjacencyList.get(node);
-            
-            System.out.print("Node " + node + " (Color: " + color + ") -> Neighbors: ");
+            Integer partition = nodePartitions.get(node);
+        
+            System.out.print("Node " + node + " (Color: " + color + ") (Partition: " + partition + ") -> Neighbors: ");
             for (int neighbor : neighbors) {
                 System.out.print(neighbor + " ");
             }

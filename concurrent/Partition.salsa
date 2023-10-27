@@ -6,17 +6,13 @@ import concurrent.Graph;
 
 behavior Partition {
 
-  Object content;
+  Graph part;
 
-  Partition(Object initialContent){
-      content = initialContent;
+  Partition(Graph initialgraph){
+      part = initialgraph;
   }
 
-  Object get(){
-      return content;
-  }
-
-  void set(Object newContent){
-      content = newContent;
+  Graph get(){
+      return part;
   }
 }
