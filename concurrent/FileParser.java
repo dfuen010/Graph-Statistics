@@ -168,10 +168,11 @@ public class FileParser {
         for (Integer i = 0; i < nodes.size(); ++i)
         {
             Integer currNode = nodes.get(i);
-            System.out.println(currNode);
+            //System.out.println(currNode);
         }
 
         System.out.println(graph.getDegree(0));
+        System.out.println(graph.getDegree(2));
 
         graph.printGraph();
     }

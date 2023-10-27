@@ -39,6 +39,8 @@ behavior GraphStats{
         Partition p = new Partition(part1);
         p <- getTotalNodesInColors();
         p <- getNodesInColors("green") @ standardOutput <- println(token);
+        p <- getTotalDegreesInColors();
+        p <- getDegreesInColors("blue") @ standardOutput <- println(token);
       }
       else
       {

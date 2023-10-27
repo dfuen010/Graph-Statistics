@@ -276,6 +276,24 @@ public class Partition extends UniversalActor  {
 		public Integer getNodesInColors(String color) {
 			return (Integer)colorTotal.get(color);
 		}
+		public Integer getDegreesInColors(String color) {
+			return (Integer)degreeColorTotal.get(color);
+		}
+		public void getTotalDegreesInColors() {
+			Iterator nodeItr = part.getNodes().iterator();
+			Iterator neighborItr;
+			while (nodeItr.hasNext()) {
+				Object node = nodeItr.next();
+				String nodeColor = part.getColor((Integer)node);
+				Integer nodeDegree = part.getDegree((Integer)node);
+				if (degreeColorTotal.containsKey(nodeColor)) {{
+					degreeColorTotal.put(nodeColor, (Integer)degreeColorTotal.get(nodeColor)+nodeDegree);
+				}
+}				else {{
+					degreeColorTotal.put(nodeColor, nodeDegree);
+				}
+}			}
+		}
 		public void getTotalNodesInColors() {
 			Iterator nodeItr = part.getNodes().iterator();
 			while (nodeItr.hasNext()) {
