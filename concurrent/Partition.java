@@ -279,9 +279,25 @@ public class Partition extends UniversalActor  {
 		public Integer getDegreesInColors(String color) {
 			return (Integer)degreeColorTotal.get(color);
 		}
-		public void getTotalDegreesInColors() {
+		public String getColorOutput(String color) {
+			return (color+", "+getNodesInColors(color)+", "+getDegreesInColors(color));
+		}
+		public Hashtable OutputColorInformation() {
+			Hashtable colorInfo = new Hashtable();
+			Enumeration colors = colorTotal.keys();
+			while (colors.hasMoreElements()) {
+				String key = (String)colors.nextElement();
+				Integer nodeDegree = (Integer)degreeColorTotal.get(key);
+				Integer nodesIn = (Integer)colorTotal.get(key);
+				Integer[] colorStats = new Integer[2];
+				colorStats[0] = nodesIn;
+				colorStats[1] = nodeDegree;
+				colorInfo.put(key, colorStats);
+			}
+			return colorInfo;
+		}
+		public void calculateTotalDegreesAndNodesInColors() {
 			Iterator nodeItr = part.getNodes().iterator();
-			Iterator neighborItr;
 			while (nodeItr.hasNext()) {
 				Object node = nodeItr.next();
 				String nodeColor = part.getColor((Integer)node);
@@ -292,14 +308,7 @@ public class Partition extends UniversalActor  {
 }				else {{
 					degreeColorTotal.put(nodeColor, nodeDegree);
 				}
-}			}
-		}
-		public void getTotalNodesInColors() {
-			Iterator nodeItr = part.getNodes().iterator();
-			while (nodeItr.hasNext()) {
-				Object node = nodeItr.next();
-				String nodeColor = part.getColor((Integer)node);
-				if (colorTotal.containsKey(nodeColor)) {{
+}				if (colorTotal.containsKey(nodeColor)) {{
 					colorTotal.put(nodeColor, (Integer)colorTotal.get(nodeColor)+1);
 				}
 }				else {{

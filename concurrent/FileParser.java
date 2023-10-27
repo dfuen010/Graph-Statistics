@@ -88,8 +88,7 @@ public class FileParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        graph.printGraph();
+        
         return graph;
     }
 

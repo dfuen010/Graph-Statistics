@@ -23,24 +23,83 @@ import concurrent.FileParser;
 */
 behavior GraphStats{
 
-   public GraphStats() {}
+   Hashtable graphColors; 
+
+   public GraphStats() 
+   {
+        graphColors = new Hashtable();
+   }
 
    String mergeString(String str1, String str2, String str3) {
        return str1+str2+str3;
     }
 
+   String WriteOutput()
+   {
+    
+     return "";
+   }
+
+   void addToGraph(Object[] results)
+   {
+        for (int i = 0; i < results.length; i++)
+        {
+            Enumeration colors = ((Hashtable) results[i]).keys();
+            while (colors.hasMoreElements())
+            {
+                String key = (String) colors.nextElement();
+                standardOutput<-println(key);
+                Object nodes_Obj = ((Hashtable) results[i]).get(key);
+                Integer nodes = ((Integer[]) nodes_Obj)[0];
+                Integer nodeDegree = ((Integer[]) nodes_Obj)[1];
+                standardOutput<-println(nodes);
+                standardOutput<-println(nodeDegree);
+                Integer[] info = new Integer[2];
+                info[0] = nodes; info[1] = nodeDegree;
+                if (graphColors.containsKey(key))
+                {
+                    info[0] = info[0] + ((Integer[])graphColors.get(key))[0];
+                    info[1] = info[1] + ((Integer[])graphColors.get(key))[1];
+                    graphColors.put(key, info);
+                    standardOutput<-println(key + info[0] + info[1]);
+                }
+                else
+                {
+                    graphColors.put(key, info);
+                }
+            }
+        }
+   }   
+
+   void CalculateColors(String filePath) 
+   {
+        FileParser fileparser = new FileParser(filePath);
+        Graph testGraph = fileparser.createGraph();
+        Partition[] actors = new Partition[testGraph.getTotalPartition()];
+        for (Integer i = 0; i < testGraph.getTotalPartition(); ++i)
+        {
+            Graph currentPartition = testGraph.getPartitionGraph(i);
+            currentPartition.printGraph();
+            actors[i] = new Partition(currentPartition);
+        }
+
+        standardOutput<-println(">>>>>>Starting the computation");        
+        join
+        {                  
+            for (int i=0;i<testGraph.getTotalPartition();i++)
+                { 
+                    actors[i] <- calculateTotalDegreesAndNodesInColors()@
+                    actors[i] <- OutputColorInformation();
+                }                       
+        }@addToGraph(token)@currentContinuation;
+   }
+
    void act(String[] args) {
       int argc = args.length;
       if (argc == 3) 
       {
-        FileParser fileparser = new FileParser(args[0]);
-        Graph testGraph = fileparser.createGraph();
-        Graph part1 = testGraph.getPartitionGraph(0);
-        Partition p = new Partition(part1);
-        p <- getTotalNodesInColors();
-        p <- getNodesInColors("green") @ standardOutput <- println(token);
-        p <- getTotalDegreesInColors();
-        p <- getDegreesInColors("blue") @ standardOutput <- println(token);
+        CalculateColors(args[0]);
+        WriteOutput();
       }
       else
       {

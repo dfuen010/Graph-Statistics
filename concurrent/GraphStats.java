@@ -266,38 +266,126 @@ public class GraphStats extends UniversalActor  {
 			}
 		}
 
+		Hashtable graphColors;
 		public void construct(){
+			graphColors = new Hashtable();
 		}
 		public String mergeString(String str1, String str2, String str3) {
 			return str1+str2+str3;
 		}
+		public String WriteOutput() {
+			return "";
+		}
+		public void addToGraph(Object[] results) {
+			for (int i = 0; i<results.length; i++){
+				Enumeration colors = ((Hashtable)results[i]).keys();
+				while (colors.hasMoreElements()) {
+					String key = (String)colors.nextElement();
+					{
+						// standardOutput<-println(key)
+						{
+							Object _arguments[] = { key };
+							Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+							__messages.add( message );
+						}
+					}
+					Object nodes_Obj = ((Hashtable)results[i]).get(key);
+					Integer nodes = ((Integer[])nodes_Obj)[0];
+					Integer nodeDegree = ((Integer[])nodes_Obj)[1];
+					{
+						// standardOutput<-println(nodes)
+						{
+							Object _arguments[] = { nodes };
+							Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+							__messages.add( message );
+						}
+					}
+					{
+						// standardOutput<-println(nodeDegree)
+						{
+							Object _arguments[] = { nodeDegree };
+							Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+							__messages.add( message );
+						}
+					}
+					Integer[] info = new Integer[2];
+					info[0] = nodes;
+					info[1] = nodeDegree;
+					if (graphColors.containsKey(key)) {{
+						info[0] = info[0]+((Integer[])graphColors.get(key))[0];
+						info[1] = info[1]+((Integer[])graphColors.get(key))[1];
+						graphColors.put(key, info);
+						{
+							// standardOutput<-println(key+info[0]+info[1])
+							{
+								Object _arguments[] = { key+info[0]+info[1] };
+								Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+								__messages.add( message );
+							}
+						}
+					}
+}					else {{
+						graphColors.put(key, info);
+					}
+}				}
+			}
+		}
+		public void CalculateColors(String filePath) {
+			FileParser fileparser = new FileParser(filePath);
+			Graph testGraph = fileparser.createGraph();
+			Partition[] actors = new Partition[testGraph.getTotalPartition()];
+			for (Integer i = 0; i<testGraph.getTotalPartition(); ++i){
+				Graph currentPartition = testGraph.getPartitionGraph(i);
+				currentPartition.printGraph();
+				actors[i] = ((Partition)new Partition(this).construct(currentPartition));
+			}
+			{
+				// standardOutput<-println(">>>>>>Starting the computation")
+				{
+					Object _arguments[] = { ">>>>>>Starting the computation" };
+					Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+					__messages.add( message );
+				}
+			}
+			{
+				Token token_2_0 = new Token();
+				// join block
+				token_2_0.setJoinDirector();
+				for (int i = 0; i<testGraph.getTotalPartition(); i++){
+					{
+						Token token_4_0 = new Token();
+						// actors[i]<-calculateTotalDegreesAndNodesInColors()
+						{
+							Object _arguments[] = {  };
+							Message message = new Message( self, actors[i], "calculateTotalDegreesAndNodesInColors", _arguments, null, token_4_0 );
+							__messages.add( message );
+						}
+						// actors[i]<-OutputColorInformation()
+						{
+							Object _arguments[] = {  };
+							Message message = new Message( self, actors[i], "OutputColorInformation", _arguments, token_4_0, token_2_0 );
+							__messages.add( message );
+						}
+					}
+				}
+				addJoinToken(token_2_0);
+				// addToGraph(token)
+				{
+					Object _arguments[] = { token_2_0 };
+					Message message = new Message( self, self, "addToGraph", _arguments, token_2_0, currentMessage.getContinuationToken() );
+					__messages.add( message );
+				}
+				throw new CurrentContinuationException();
+			}
+		}
 		public void act(String[] args) {
 			int argc = args.length;
 			if (argc==3) {{
-				FileParser fileparser = new FileParser(args[0]);
-				Graph testGraph = fileparser.createGraph();
-				Graph part1 = testGraph.getPartitionGraph(0);
-				Partition p = ((Partition)new Partition(this).construct(part1));
 				{
-					// p<-getTotalNodesInColors()
+					// CalculateColors(args[0])
 					{
-						Object _arguments[] = {  };
-						Message message = new Message( self, p, "getTotalNodesInColors", _arguments, null, null );
-						__messages.add( message );
-					}
-				}
-				{
-					Token token_3_0 = new Token();
-					// p<-getNodesInColors("green")
-					{
-						Object _arguments[] = { "green" };
-						Message message = new Message( self, p, "getNodesInColors", _arguments, null, token_3_0 );
-						__messages.add( message );
-					}
-					// standardOutput<-println(token)
-					{
-						Object _arguments[] = { token_3_0 };
-						Message message = new Message( self, standardOutput, "println", _arguments, token_3_0, null );
+						Object _arguments[] = { args[0] };
+						Message message = new Message( self, self, "CalculateColors", _arguments, null, null );
 						__messages.add( message );
 					}
 				}

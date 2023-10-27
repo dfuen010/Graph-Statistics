@@ -28,10 +28,35 @@ behavior Partition {
     return (Integer) degreeColorTotal.get(color);
   }
 
-  void getTotalDegreesInColors()
+  String getColorOutput(String color)
+  {
+    return (color + ", " + getNodesInColors(color) + ", " + getDegreesInColors(color));
+  }
+
+  Hashtable OutputColorInformation() 
+  {
+    Hashtable colorInfo = new Hashtable();
+    Enumeration colors = colorTotal.keys();
+    while (colors.hasMoreElements()) 
+    {
+        // Getting the key of a particular entry
+        String key = (String) colors.nextElement();
+        //standardOutput<-println(key);
+        Integer nodeDegree = (Integer) degreeColorTotal.get(key);
+        Integer nodesIn = (Integer) colorTotal.get(key);
+        Integer[] colorStats = new Integer[2];
+        colorStats[0] = nodesIn;
+        colorStats[1] = nodeDegree;
+        //standardOutput<-println(nodesIn);
+        //standardOutput<-println(nodeDegree);
+        colorInfo.put(key, colorStats);
+    }
+    return colorInfo;
+  }
+
+  void calculateTotalDegreesAndNodesInColors()
   {
     Iterator nodeItr = part.getNodes().iterator();
-    Iterator neighborItr;
     while (nodeItr.hasNext())
     {
         Object node = nodeItr.next();
@@ -45,16 +70,6 @@ behavior Partition {
         {
             degreeColorTotal.put(nodeColor, nodeDegree);
         }
-    }
-  }
-
-  void getTotalNodesInColors()
-  {
-    Iterator nodeItr = part.getNodes().iterator();
-    while (nodeItr.hasNext())
-    {
-        Object node = nodeItr.next();
-        String nodeColor = part.getColor((Integer) node);
         if (colorTotal.containsKey(nodeColor))
         {
             colorTotal.put(nodeColor, (Integer) colorTotal.get(nodeColor) + 1);
@@ -63,9 +78,6 @@ behavior Partition {
         {
             colorTotal.put(nodeColor, 1);
         }
-        //standardOutput<-println(nodeColor)@
-        //standardOutput<-println(colorTotal.get(nodeColor));
     }
   }
-
 }

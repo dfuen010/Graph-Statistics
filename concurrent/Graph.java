@@ -126,6 +126,10 @@ public class Graph implements Serializable {
         return nodePartitions.get(node);
     }
 
+    public Integer getTotalPartition() {
+        return numPartition;
+    }
+
     public void printGraph() {
         System.out.print("Number of Partitions: " + numPartition + "\n");
         for (Map.Entry<Integer, String> entry : nodeColors.entrySet()) {
