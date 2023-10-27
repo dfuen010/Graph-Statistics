@@ -1,0 +1,6 @@
+java -cp /mnt/c/Users/marioj5/salsa1.1.6.jar:. salsac.SalsaCompiler concurrent/GraphStats.salsa concurrent/Partition.salsa
+javac -classpath /mnt/c/Users/marioj5/salsa1.1.6.jar:. concurrent/GraphStats.java concurrent/Partition.java
+java -cp /mnt/c/Users/marioj5/salsa1.1.6.jar:. concurrent.GraphStats concurrent/input_file.txt a b
+
+C:\Users\marioj5
+/mnt/c/Users/marioj5/salsa1.1.6.jar:.

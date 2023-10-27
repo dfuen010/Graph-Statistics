@@ -268,10 +268,110 @@ public class Partition extends UniversalActor  {
 		Graph part;
 		Hashtable colorTotal;
 		Hashtable degreeColorTotal;
+		Hashtable internalNodesToDegrees;
+		Hashtable externalNodesToDegrees;
+		Hashtable adjacentNodes;
 		void construct(Graph initialgraph){
 			part = initialgraph;
 			colorTotal = new Hashtable();
 			degreeColorTotal = new Hashtable();
+			internalNodesToDegrees = new Hashtable();
+			externalNodesToDegrees = new Hashtable();
+			adjacentNodes = new Hashtable();
+		}
+		public void mostInfluentialInPartition() {
+			Iterator nodeItr = part.getNodes().iterator();
+			{
+				// standardOutput<-println("Internal nodes are ")
+				{
+					Object _arguments[] = { "Internal nodes are " };
+					Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+					__messages.add( message );
+				}
+			}
+			while (nodeItr.hasNext()) {
+				Object node = nodeItr.next();
+				int tmpNode = (Integer)node;
+				internalNodesToDegrees.put((Integer)node, part.getDegree(tmpNode));
+				{
+					// standardOutput<-println(tmpNode)
+					{
+						Object _arguments[] = { tmpNode };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+				List tmp = part.getNeighbors(tmpNode);
+				Iterator adjItr = tmp.iterator();
+				while (adjItr.hasNext()) {
+					Object tmpp = adjItr.next();
+					int adjNode = (Integer)tmpp;
+					adjacentNodes.put(adjNode, 0);
+				}
+			}
+			List keysListAdj = new ArrayList(adjacentNodes.keySet());
+			Iterator keyItrAdj = keysListAdj.iterator();
+			while (keyItrAdj.hasNext()) {
+				Object temp = keyItrAdj.next();
+				int tempInt = (Integer)temp;
+				if (!internalNodesToDegrees.containsKey(tempInt)) {{
+					externalNodesToDegrees.put(tempInt, part.getDegree(tempInt));
+				}
+}			}
+			List exKeysList = new ArrayList(externalNodesToDegrees.keySet());
+			Iterator exKeyItr = exKeysList.iterator();
+			while (exKeyItr.hasNext()) {
+				Object exKey = exKeyItr.next();
+				int exKeyInt = (Integer)exKey;
+				{
+					// standardOutput<-println("external")
+					{
+						Object _arguments[] = { "external" };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+				{
+					// standardOutput<-println(exKeyInt)
+					{
+						Object _arguments[] = { exKeyInt };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+			}
+			List keysList = new ArrayList(internalNodesToDegrees.keySet());
+			List valuesList = new ArrayList(internalNodesToDegrees.values());
+			Iterator keyItr = keysList.iterator();
+			Iterator valueItr = valuesList.iterator();
+			while (keyItr.hasNext()) {
+				Object tmpKey = keyItr.next();
+				Object tmpValue = valueItr.next();
+				{
+					// standardOutput<-println("key and value is?")
+					{
+						Object _arguments[] = { "key and value is?" };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+				{
+					// standardOutput<-println(tmpKey)
+					{
+						Object _arguments[] = { tmpKey };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+				{
+					// standardOutput<-println(tmpValue)
+					{
+						Object _arguments[] = { tmpValue };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+			}
 		}
 		public Integer getNodesInColors(String color) {
 			return (Integer)colorTotal.get(color);

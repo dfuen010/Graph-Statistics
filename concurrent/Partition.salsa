@@ -11,11 +11,114 @@ behavior Partition {
   //for each color
   Hashtable colorTotal;
   Hashtable degreeColorTotal;
+  Hashtable internalNodesToDegrees;
+  Hashtable externalNodesToDegrees;
+  Hashtable adjacentNodes;
 
   Partition(Graph initialgraph){
       part = initialgraph;
       colorTotal = new Hashtable();
       degreeColorTotal = new Hashtable();
+      internalNodesToDegrees = new Hashtable();
+      externalNodesToDegrees = new Hashtable();
+      adjacentNodes = new Hashtable();
+  }
+  
+  // need to get the most influential nodes for this partition 
+  // and send to graphstats 
+  
+  void mostInfluentialInPartition() { 
+
+
+    Iterator nodeItr = part.getNodes().iterator();
+
+
+
+    // This will get all the nodes in the partiton(internal nodes)
+    // but we need to worry about external nodes as well
+
+    // For every node, also get every node connected to it.
+    // THen, compare every node the the list of nodes for the current parittion
+    // If it is not in it, then it is external.
+
+    // Keep a list of these external to run through after the internal nodes are done
+
+    standardOutput<-println("Internal nodes are ");
+    while (nodeItr.hasNext()) {
+
+      // Get all influence of nodes and store
+      Object node = nodeItr.next();
+      int tmpNode = (Integer) node;
+      internalNodesToDegrees.put((Integer) node, part.getDegree(tmpNode));
+      standardOutput<-println(tmpNode);
+
+
+      // Focus on looking at the adjacent nodes and storing all
+      List tmp = part.getNeighbors(tmpNode);
+      Iterator adjItr = tmp.iterator();
+
+      while (adjItr.hasNext()) {
+        Object tmpp = adjItr.next();
+        int adjNode = (Integer) tmpp;
+        
+        // This will get all adjacentNodes together, removing duplicates
+        adjacentNodes.put(adjNode, 0);
+      }
+
+    }
+
+    // add external from adjacentNodes
+    //Iterator tmpItr = adjacentNodes.iterator();
+    List keysListAdj = new ArrayList(adjacentNodes.keySet());
+    Iterator keyItrAdj = keysListAdj.iterator();
+
+
+    while (keyItrAdj.hasNext()) {
+      Object temp = keyItrAdj.next();
+      int tempInt = (Integer) temp;
+
+      // check if node is in internalNodes
+      if (!internalNodesToDegrees.containsKey(tempInt)) {
+        externalNodesToDegrees.put(tempInt, part.getDegree(tempInt));
+      }
+    }
+
+    // Check to make sure externalNodesToDegrees is right
+    List exKeysList = new ArrayList(externalNodesToDegrees.keySet());
+    Iterator exKeyItr = exKeysList.iterator();
+    while (exKeyItr.hasNext()) {
+      Object exKey = exKeyItr.next();
+      int exKeyInt = (Integer) exKey;
+      standardOutput<-println("external");
+      standardOutput<-println(exKeyInt);
+    }
+
+
+    // Convert Hashtable to arraylist
+    List keysList = new ArrayList(internalNodesToDegrees.keySet());
+    List valuesList = new ArrayList(internalNodesToDegrees.values());
+    Iterator keyItr = keysList.iterator();
+    Iterator valueItr = valuesList.iterator();
+
+
+    // check stuff in Hashtable
+    while (keyItr.hasNext()) {
+      Object tmpKey = keyItr.next();
+      Object tmpValue = valueItr.next();
+
+      standardOutput<-println("key and value is?");
+      standardOutput<-println(tmpKey);
+      standardOutput<-println(tmpValue);
+    }
+
+
+    // Now that we have all the internal nodes and edges
+    // we have to worry about the external nodes and edges
+
+    // return back to graph stats, where ask each other actor
+    // for the degree of the node for each internal node
+
+
   }
     
   Integer getNodesInColors(String color)
