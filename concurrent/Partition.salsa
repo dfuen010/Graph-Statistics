@@ -120,6 +120,11 @@ behavior Partition {
 
 
   }
+
+  void printB()
+  {
+    part.putFileB("print_stuff", "b.txt");
+  }
     
   Integer getNodesInColors(String color)
   {
@@ -160,6 +165,7 @@ behavior Partition {
   void calculateTotalDegreesAndNodesInColors()
   {
     Iterator nodeItr = part.getNodes().iterator();
+  }
   void getTotalDegreesInColors()
   {
     Iterator nodeItr = part.getNodes().iterator();
@@ -188,5 +194,4 @@ behavior Partition {
   }
         //standardOutput<-println(nodeColor)@
         //standardOutput<-println(colorTotal.get(nodeColor));
-    }
-  }
+}

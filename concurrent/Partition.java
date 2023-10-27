@@ -373,6 +373,9 @@ public class Partition extends UniversalActor  {
 				}
 			}
 		}
+		public void printB() {
+			part.putFileB("print_stuff", "b.txt");
+		}
 		public Integer getNodesInColors(String color) {
 			return (Integer)colorTotal.get(color);
 		}
@@ -398,26 +401,26 @@ public class Partition extends UniversalActor  {
 		}
 		public void calculateTotalDegreesAndNodesInColors() {
 			Iterator nodeItr = part.getNodes().iterator();
-public void getTotalDegreesInColors() {
-				Iterator nodeItr = part.getNodes().iterator();
-				while (nodeItr.hasNext()) {
-					Object node = nodeItr.next();
-					String nodeColor = part.getColor((Integer)node);
-					Integer nodeDegree = part.getDegree((Integer)node);
-					if (degreeColorTotal.containsKey(nodeColor)) {{
-						degreeColorTotal.put(nodeColor, (Integer)degreeColorTotal.get(nodeColor)+nodeDegree);
-					}
-}					else {{
-						degreeColorTotal.put(nodeColor, nodeDegree);
-					}
-}					if (colorTotal.containsKey(nodeColor)) {{
-						colorTotal.put(nodeColor, (Integer)colorTotal.get(nodeColor)+1);
-					}
-}					else {{
-						colorTotal.put(nodeColor, 1);
-					}
-}				}
-			}
+		}
+		public void getTotalDegreesInColors() {
+			Iterator nodeItr = part.getNodes().iterator();
+			while (nodeItr.hasNext()) {
+				Object node = nodeItr.next();
+				String nodeColor = part.getColor((Integer)node);
+				Integer nodeDegree = part.getDegree((Integer)node);
+				if (degreeColorTotal.containsKey(nodeColor)) {{
+					degreeColorTotal.put(nodeColor, (Integer)degreeColorTotal.get(nodeColor)+nodeDegree);
+				}
+}				else {{
+					degreeColorTotal.put(nodeColor, nodeDegree);
+				}
+}				if (colorTotal.containsKey(nodeColor)) {{
+					colorTotal.put(nodeColor, (Integer)colorTotal.get(nodeColor)+1);
+				}
+}				else {{
+					colorTotal.put(nodeColor, 1);
+				}
+}			}
 		}
 	}
 }

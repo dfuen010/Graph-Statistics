@@ -455,6 +455,14 @@ public class GraphStats extends UniversalActor  {
 						__messages.add( message );
 					}
 				}
+				{
+					// p<-printB()
+					{
+						Object _arguments[] = {  };
+						Message message = new Message( self, p, "printB", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
 			}
 }			else {{
 				{

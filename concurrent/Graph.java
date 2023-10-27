@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 // Currently makes one big Graph
 // But maybe we need to make an individual graph
@@ -31,6 +34,25 @@ public class Graph implements Serializable {
         adjacencyList = new HashMap<>();
         nodePartitions = new HashMap<>();
         numPartition = 0;
+    }
+
+    public void putFileB(String content, String fileName) {
+
+        try {
+            // Create a FileWriter and a BufferedWriter to write to the file
+            FileWriter fileWriter = new FileWriter(fileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // Write the content to the file
+            bufferedWriter.write(content);
+
+            // Close the BufferedWriter to ensure that all data is written to the file
+            bufferedWriter.close();
+
+            System.out.println("Data has been written to the file.");
+        } catch (IOException e) {
+            System.err.println("An error occurred: " + e.getMessage());
+        }
     }
 
     public void addNode(int node, String color, int partition) {
@@ -114,6 +136,10 @@ public class Graph implements Serializable {
         return degree;
     }
 
+    public Integer getTotalPartition() {
+        return numPartition;
+    }
+
     public String getColor(int node) {
         return nodeColors.get(node);
     }
@@ -126,8 +152,17 @@ public class Graph implements Serializable {
         return nodePartitions.get(node);
     }
 
-    public Integer getTotalPartition() {
-        return numPartition;
+    public void outputB() {
+
+      // Sample output
+
+      // partition 0: 0,1,4,9
+      // partition 1: 1,4,5,8
+      // partition 2: 0,5,8,9
+      // G: 0,1,4,5,8,9
+
+
+
     }
 
     public void printGraph() {

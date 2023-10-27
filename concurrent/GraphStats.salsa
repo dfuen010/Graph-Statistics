@@ -118,6 +118,8 @@ behavior GraphStats{
         p <- getNodesInColors("green") @ standardOutput <- println(token);
 
         p <- mostInfluentialInPartition();
+
+        p <- printB();
       }
       else
       {
