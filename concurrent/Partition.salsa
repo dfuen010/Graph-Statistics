@@ -6,10 +6,16 @@ import concurrent.Graph;
 
 behavior Partition {
 
-  Graph part;
+  private Graph part;
+  //these are to store the total number of nodes in each color and to hold the total degree number
+  //for each color
+  private Hashtable colorTotal;
+  private Hashtable degreeColorTotal;
 
   Partition(Graph initialgraph){
       part = initialgraph;
+      colorTotal = new Hashtable();
+      degreeColorTotal = new Hashtable();
   }
 
   Graph get(){

@@ -266,15 +266,15 @@ public class Partition extends UniversalActor  {
 		}
 
 		Graph part;
+		Hashtable colorTotal;
+		Hashtable degreeColorTotal;
 		void construct(Graph initialgraph){
 			part = initialgraph;
-			part.printGraph();
+			colorTotal = new Hashtable();
+			degreeColorTotal = new Hashtable();
 		}
 		public Graph get() {
 			return part;
-		}
-		public void set(Graph newGraph) {
-			part = newGraph;
 		}
 	}
 }
