@@ -110,13 +110,86 @@ behavior GraphStats{
       {
         CalculateColors(args[0])@
         WriteOutput();
+        FileParser fileparser = new FileParser(args[0]);
+        Graph testGraph = fileparser.createGraph();
+        Graph part1 = testGraph.getPartitionGraph(0);
+        Partition p = new Partition(part1);
+        p <- getTotalNodesInColors();
+        p <- getNodesInColors("green") @ standardOutput <- println(token);
+
+        p <- mostInfluentialInPartition();
       }
       else
       {
-        standardOutput<-println("What's your name?")@
-        standardInput<-readLine()@
-        self<-mergeString("Hi, ",token, ". Nice to meet you!" )@
-        standardOutput<-println(token);
+         standardOutput<-println("Wrong number of args");
+        //standardOutput<-println("What's your name?")@
+        //standardInput<-readLine()@
+        //self<-mergeString("Hi, ",token, ". Nice to meet you!" )@
+        //standardOutput<-println(token);
       }
    }
 }
+   /*
+        FileParser fileparser = new FileParser(args[0]);
+        Graph testGraph = fileparser.createGraph();
+        Graph part1 = testGraph.getPartitionGraph(0);
+        Partition p = new Partition(part1);
+        p <- getTotalNodesInColors();
+        p <- getNodesInColors("green") @ standardOutput <- println(token);
+
+        p <- mostInfluentialInPartition();
+      }
+      else
+      {
+         standardOutput<-println("Wrong number of args");
+        //standardOutput<-println("What's your name?")@
+        //standardInput<-readLine()@
+        //self<-mergeString("Hi, ",token, ". Nice to meet you!" )@
+        //standardOutput<-println(token);
+      }
+   }
+
+
+
+
+      void partb() {
+
+
+      // for each actor
+
+    //   actor 
+
+
+
+
+      // create an array of actors
+      // have them talk to each other
+      // Sample output
+      // partition 0: 0,1,4,9
+      // partition 1: 1,4,5,8
+      // partition 2: 0,5,8,9
+      // G: 0,1,4,5,8,9
+
+      // for each partition, list most influential node
+      // for total graoh list most influential nodes
+
+      // graph is just all of most influential from sets put together
+
+
+      // For each partition 
+
+         // 1.) get degree of each internal node
+         
+         // 2.) get list of external nodes connected to partition
+
+            // 3.) For each external node, messages actors to get degree of iterator
+         
+      // 4.) find largest degree nodes for each partiton by checking degree of all intern and external nodes
+      
+      // 5.) return largest degree node(s) for each parittion and total graph, if tied return all of highest degree
+
+
+
+   }
+}
+*/

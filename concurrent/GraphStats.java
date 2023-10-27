@@ -420,34 +420,48 @@ public class GraphStats extends UniversalActor  {
 						__messages.add( message );
 					}
 				}
-			}
-}			else {{
+				FileParser fileparser = new FileParser(args[0]);
+				Graph testGraph = fileparser.createGraph();
+				Graph part1 = testGraph.getPartitionGraph(0);
+				Partition p = ((Partition)new Partition(this).construct(part1));
 				{
-					Token token_3_0 = new Token();
-					Token token_3_1 = new Token();
-					Token token_3_2 = new Token();
-					// standardOutput<-println("What's your name?")
-					{
-						Object _arguments[] = { "What's your name?" };
-						Message message = new Message( self, standardOutput, "println", _arguments, null, token_3_0 );
-						__messages.add( message );
-					}
-					// standardInput<-readLine()
+					// p<-getTotalNodesInColors()
 					{
 						Object _arguments[] = {  };
-						Message message = new Message( self, standardInput, "readLine", _arguments, token_3_0, token_3_1 );
+						Message message = new Message( self, p, "getTotalNodesInColors", _arguments, null, null );
 						__messages.add( message );
 					}
-					// ((GraphStats)self)<-mergeString("Hi, ", token, ". Nice to meet you!")
+				}
+				{
+					Token token_3_0 = new Token();
+					// p<-getNodesInColors("green")
 					{
-						Object _arguments[] = { "Hi, ", token_3_1, ". Nice to meet you!" };
-						Message message = new Message( self, ((GraphStats)self), "mergeString", _arguments, token_3_1, token_3_2 );
+						Object _arguments[] = { "green" };
+						Message message = new Message( self, p, "getNodesInColors", _arguments, null, token_3_0 );
 						__messages.add( message );
 					}
 					// standardOutput<-println(token)
 					{
-						Object _arguments[] = { token_3_2 };
-						Message message = new Message( self, standardOutput, "println", _arguments, token_3_2, null );
+						Object _arguments[] = { token_3_0 };
+						Message message = new Message( self, standardOutput, "println", _arguments, token_3_0, null );
+						__messages.add( message );
+					}
+				}
+				{
+					// p<-mostInfluentialInPartition()
+					{
+						Object _arguments[] = {  };
+						Message message = new Message( self, p, "mostInfluentialInPartition", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+			}
+}			else {{
+				{
+					// standardOutput<-println("Wrong number of args")
+					{
+						Object _arguments[] = { "Wrong number of args" };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
 						__messages.add( message );
 					}
 				}

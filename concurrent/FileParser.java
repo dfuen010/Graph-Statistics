@@ -101,7 +101,7 @@ public class FileParser {
 
 
 
-
+       // change form hardcoded
         try (BufferedReader reader = new BufferedReader(new FileReader("concurrent/input_file.txt"))) {
             String line;
             String[] tmpNodes;
