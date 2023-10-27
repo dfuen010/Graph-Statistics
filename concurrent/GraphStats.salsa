@@ -1,0 +1,47 @@
+
+module concurrent;
+
+import java.util.*;
+import java.io.*;
+import concurrent.Graph;
+import concurrent.FileParser;
+ 
+/*
+   This behavior simply prints out a string,
+   reads a line from the Standard Input,
+   combines the return value of the Standard Input with other strings,
+   and then prints out the combined string.
+
+   commands to compile and run
+
+   java -cp salsa1.1.6.jar:. salsac.SalsaCompiler concurrent/*.salsa
+
+   javac -classpath salsa1.1.6.jar:. concurrent/*.java
+
+   java -cp salsa1.1.6.jar:. concurrent.GraphStats
+
+*/
+behavior GraphStats{
+
+   public GraphStats() {}
+
+   String mergeString(String str1, String str2, String str3) {
+       return str1+str2+str3;
+    }
+
+   void act(String[] args) {
+      int argc = args.length;
+      if (argc != 1) 
+      {
+        standardOutput<-println("Not the right number of arguements");
+        return;
+      }
+      else
+      {
+        standardOutput<-println("What's your name?")@
+        standardInput<-readLine()@
+        self<-mergeString("Hi, ",token, ". Nice to meet you!" )@
+        standardOutput<-println(token);
+      }
+   }
+}

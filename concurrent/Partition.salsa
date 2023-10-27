@@ -1,0 +1,22 @@
+module concurrent;
+
+import java.util.*;
+import java.io.*;
+import concurrent.Graph;
+
+behavior Partition {
+
+  Object content;
+
+  Partition(Object initialContent){
+      content = initialContent;
+  }
+
+  Object get(){
+      return content;
+  }
+
+  void set(Object newContent){
+      content = newContent;
+  }
+}
