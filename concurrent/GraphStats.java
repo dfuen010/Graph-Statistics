@@ -274,6 +274,30 @@ public class GraphStats extends UniversalActor  {
 			return str1+str2+str3;
 		}
 		public String WriteOutput() {
+			Enumeration colors = graphColors.keys();
+			{
+				// standardOutput<-println("HEIWQJIIWDOOQWO")
+				{
+					Object _arguments[] = { "HEIWQJIIWDOOQWO" };
+					Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+					__messages.add( message );
+				}
+			}
+			String output = new String("");
+			while (colors.hasMoreElements()) {
+				String key = (String)colors.nextElement();
+				Integer nodes = ((Integer[])graphColors.get(key))[0];
+				Integer nodeDegree = ((Integer[])graphColors.get(key))[1];
+				output.concat(key+", "+nodes+", "+nodeDegree+"\n");
+				{
+					// standardOutput<-println(output)
+					{
+						Object _arguments[] = { output };
+						Message message = new Message( self, standardOutput, "println", _arguments, null, null );
+						__messages.add( message );
+					}
+				}
+			}
 			return "";
 		}
 		public void addToGraph(Object[] results) {
@@ -382,10 +406,17 @@ public class GraphStats extends UniversalActor  {
 			int argc = args.length;
 			if (argc==3) {{
 				{
+					Token token_3_0 = new Token();
 					// CalculateColors(args[0])
 					{
 						Object _arguments[] = { args[0] };
-						Message message = new Message( self, self, "CalculateColors", _arguments, null, null );
+						Message message = new Message( self, self, "CalculateColors", _arguments, null, token_3_0 );
+						__messages.add( message );
+					}
+					// WriteOutput()
+					{
+						Object _arguments[] = {  };
+						Message message = new Message( self, self, "WriteOutput", _arguments, token_3_0, null );
 						__messages.add( message );
 					}
 				}

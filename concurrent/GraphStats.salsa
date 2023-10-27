@@ -36,7 +36,17 @@ behavior GraphStats{
 
    String WriteOutput()
    {
-    
+     Enumeration colors = graphColors.keys();
+     standardOutput <- println("HEIWQJIIWDOOQWO");
+     String output = new String("");
+     while (colors.hasMoreElements())
+            {
+                String key = (String) colors.nextElement();
+                Integer nodes = ((Integer[])graphColors.get(key))[0];
+                Integer nodeDegree = ((Integer[])graphColors.get(key))[1];
+                output.concat(key + ", " + nodes + ", " + nodeDegree + "\n");
+                standardOutput <- println(output);
+            }
      return "";
    }
 
@@ -98,7 +108,7 @@ behavior GraphStats{
       int argc = args.length;
       if (argc == 3) 
       {
-        CalculateColors(args[0]);
+        CalculateColors(args[0])@
         WriteOutput();
       }
       else
